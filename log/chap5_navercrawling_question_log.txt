@@ -1,0 +1,474 @@
+#========#========#========#========#
+write 
+	230323
+	230327
+writer 
+	sht
+content
+	빅데이터 분석 강의 3주차
+	- python과 네이버api를 이용한 크롤링
+#========#========#========#========#
+	
+###1. 네이버 API로 프로그램5-1(교재 pp.138-140)을 작성하여 실행하고, 
+141쪽 그림 5-7(a)와 같이 파이썬 셀 창에 출력된 실행결과를 캡쳐하여 아래에 넣으시오.
+
+교제의 예제를 그대로 따라 적고 실행 결과를 캡쳐하는 내용이다.
+코드는 총 4개로 분리되어 작성한다.
+
+코드에 대한 간단한 해설
+0 - main():
+	최초 실행 구간.
+	기본적으로 주어질 매개변수들을 기입한다.
+	주어진 변수를은 2번 함수로 이동하여 api로부터 데이터를 받는다.
+	받은 데이터를 3번 함수로 파싱하고 정제하고 얻어낸 데이터를 파일로 저장한다.
+1 - getRequestUrl(url):
+	url을 받아 api에 직접적으로 요청을 전달한다.
+	네미버로부터 받은 id롸 secret을 읽어 데이터를 요청하고
+	요청이 성공적으로 이루어져(code==200) 데이터를 받아오면 return한다.
+2 - getNaverSearch(node, srcText, start, display):
+	메인에서 받은 매개변수를 이용하여 네이더에 직접적으로 검색을 시도하기 위한 url을 조합한다.
+	주어진 매개변수를 조합하여 node와 parameter를 만들어 url을 생성한다.
+	만들어진 url을 1번 함수로 이동하여 데이터를 받고 데이터가 주어지지 않으면 None을 반환한다.
+3 - getPostData(post, jsonResult, cnt):
+	1번과 2번을 거쳐 얻어낸 json 데이터를 파싱하는 작업을 한다.
+	주어진 매개변수를 기준으로 추출할 값을 정하고 전달받은 json에서 해당하는 값을 추출해 거장한다.
+
+예제는 네이버api를 이용하여 검색할 키워드를 받아 검색하고 이중 'news'에서 작성된 데이터들을 받아 가져온다.
+데이터는 100회씩 끊어 10번 실행하여 총 1000개의 게시글을 탐색하면 None을 받환하여 멈추게 된다.
+파싱된 데이터는 json 파일로 저장되며
+cnt, description, link, org_link, pDate, title 데이터들이 저장된다.
+
+
+겪었던 에러들
+	대부분 순전히 오타가 많았다.
+	책을 보고 따라 적는것이기에 스스로 적는 것에 비해 오타가 많았다.
+	.과 ,을 잘못 적기도 하고 keys를 key하고 적거나 com을 con으로, ;을 :으로, ""와 ''를, &와 %를 잘못 적는 등 
+	오타로 인해 수많은 error를 발생시켰다.
+	단어의 철자, 유사하게 생긴 문자들, 비슷한 용도로 쓰이는 문자들이 햇갈리면 겪는 수많은 사람들이 겪는 헤프닝이었다.
+	
+	또한 책에서 있던 것을 그대로 적어서 발생한 문제로 url의 query문 부분에 공백을 입력하여 발생하는 문제도 있었다.
+	
+	error 발생 문구들을 chat-gpt를 이용해 문답하여 하나씩 해결해나갔다.
+
+
+
+
+
+###2. 네이버 API로 블로그(blog)에서 ‘부산맛집’에 대한 검색 결과를 크롤링하여 파일로 저장하는 프로그램을 작성하시오 
+(아래 그림처럼 검색 결과의 일부를 캡쳐하여 아래에 넣으시오).
+
+진행 과정.
+  - 기본적으로 1.번 문제에서 사용 한 코드를 문제에 맞게 수정하여 결과를 만들어 내고자 하였다.
+	문제에서 제시된 내용은
+	1. 블로그(blog)에서
+	2. '부산맛집' 이라는 키워드를 검색
+	3. "blogger", "cnt", "description", "link", "pDate", "title"
+		의 내용을 json으로 저장
+	위 3가지 내용이다.
+	
+	
+	
+	첫번째로 블로그를 탐색해야 한다.
+	1번 문제는 'news'를 이용하여 뉴스를 검색하였가애 'blog'로 바꾸어 주어 블로그를 검색하도록 바꾸어야 한다.
+	책을 보기 전, news나 blog등의 쿼리에 필요한 단어들을 몰라서 
+	검색을 하거나 여러 단어를 기입하는 시도를 하였다.
+	하지만 카테고리만 바꾸었기에 에러가 발생하므로 어디까지 진행하는지 알아보기 위해
+	json 검색 구간인 2번 코드와 데이터를 추출하는 3번 코드 사이에
+	가공되지 않은 날 것 상태의 json 데이터를 print하여 얻어내고
+	vs code에 json으로 저장하여 indent 정렬해주어 데이터를 읽어보니
+	blog와 news의 json 데이터 내용이 달라 발생하는 문제였다.
+	
+	#230327
+	
+	blog로 변환하여 다시 탐색을 해 보고 전체 json 파일을 확인하면
+	title, link, description, bloggername, bloggerlink, postdate
+	6개의 데이터가 제시된다.
+	이중 필요한 내용은 
+	blogger = bloggername
+	#cnt
+	description = description
+	link = link
+	pDate = postdate
+	title = title
+	5가지 이다.
+
+	[CODE 3]에서 받아야 할 데이터를 추가하고 변경하여 파싱하고
+	반환하는 값도 순서에 맞게 다시 입력한다.
+	
+	
+ERROR LOG
+
+
+[2023-03-27 12:11:37.229651] Url Request Success
+1049558
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-1-77683b8c59cb> in <module>
+     92 
+     93 if __name__ == '__main__':
+---> 94   main()
+     95 
+
+3 frames
+<ipython-input-1-77683b8c59cb> in main()
+     74     for post in jsonResponse['items']:
+     75       cnt += 1
+---> 76       getPostData(post, jsonResult, cnt)  #[CODE 3]
+     77 
+     78     start = jsonResponse['start'] + jsonResponse['display']
+
+<ipython-input-1-77683b8c59cb> in getPostData(post, jsonResult, cnt)
+     46   blogger = post['bloggername']
+     47 
+---> 48   pDate = datetime.datetime.strptime(post['postdate'], '%a, %d %b %Y +0900')
+     49   # pDate = datetime.datetime.strptime(post['postdate'], '%Y%m%dT%H%M%S')
+     50   pDate = pDate.strftime('%Y%m%d')
+
+/usr/lib/python3.9/_strptime.py in _strptime_datetime(cls, data_string, format)
+    566     """Return a class cls instance based on the input string and the
+    567     format string."""
+--> 568     tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+    569     tzname, gmtoff = tt[-2:]
+    570     args = tt[:6] + (fraction,)
+
+/usr/lib/python3.9/_strptime.py in _strptime(data_string, format)
+    347     found = format_regex.match(data_string)
+    348     if not found:
+--> 349         raise ValueError("time data %r does not match format %r" %
+    350                          (data_string, format))
+    351     if len(data_string) != found.end():
+
+ValueError: time data '20230305' does not match format '%a, %d %b %Y +0900'
+
+
+	pData의 형식은 yyyymmdd이다.
+	기존의 news의 경우 요일이나 연도, 월, 일등을 분리하여 파싱후 재가공하였지만
+	블로그는 기본적으로 제공되는 데이터의 형태가 문제에서 제시하는 형태과 같으므로 재가공 없이 그대로 저장한다.
+
+	그외에 오류는 자잘한 오타나 글자 누락이었다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

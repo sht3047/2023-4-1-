@@ -1,0 +1,42 @@
+chap06 BeautifulSoup pelicana store list crawling
+
+6장의 기본 예제는 Hollys의 전국 매장의 위치, 주소, 전화번호 등을 크롤링하여 csv로 저장하였다.
+
+파생된 문제는 pelicana의 전국 매장을 보여주는 페이지에서 매장의 정보를 저장하고 이를 csv로 저장하는 내용이다.
+기본적인 코드는 다를게 없으므로 이전에 사용한 예제 코드를 복사하여 데이터에 맞게 고쳐준다.
+
+가장 먼저 url, 파일명, 변수 이름의 hollys를 pelicana로 바꿔준다.
+pelicana의 url에 접속하여 최대 페이지가 몇페이지 인지, 점포의 점보가 담겨엤는 table의 구성이 어떠한지 확인한다.
+예제와 달리 table의 내용은 4개의 column 으로 이루어져있고
+점포명, 주소, 전화번호, 상세정보 4개의 내용이 담겨있다.
+이중 상세내용은 지도에서의 위치르 보여주는 항목으로 실질적으로 가져올 데이터는 3개이다.
+
+예제에서 td를 파싱하는 내용을 수정하여
+store_name, store_address, store_phone 순서로 받아오도록 바꿔준다.
+
+파싱한 데이터를 result에 append하고 반복이 끝난 후 pandas를 이용하여 csv로 저장하면 완료이다.
+
+
+
+
+issue
+	WARNING:bs4.dammit:Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
+		매 페이지를 읽어올때마다 인코딩 오류가 방생한다.
+		하지만 저장된 내용에 큰 오류가 없는것으로 확인되어 csv를 uft-8로 바꿔주는 외에 조치는 취하지 않았다.
+		
+	store_phone "\r\n\t\t\t\t\t\t\t\t"
+		전화번호를 읽어오는 과정에서 개행 문자가 포함되는 이슈가 발생한다.
+		큰 문제는 아니나 보기에 좋지 않아 코드에 조치를 취했다.
+		store_phone 은 store_td[2].string 의 내용을 저장한다.
+		이를 str 함수를 통해 문자열로 변환하고 replace 함수를 이용하여 해당 문자열을 공백으로 바꾸어주었다.
+
+
+
+
+
+
+
+
+
+
+

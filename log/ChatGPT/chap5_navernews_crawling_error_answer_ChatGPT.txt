@@ -1,0 +1,311 @@
+검색을 입력하세요 : ㅁㄴㅇ
+URL can't contain control characters. '/v1/search/news.json?query = %E3%85%81%E3%84%B4%E3%85%87&start = 1&display = 100' (found at least ' ')
+[2023-03-22 03:40:38.292370] Error for URL : https://openapi.naver.con/v1/search/news.json?query = %E3%85%81%E3%84%B4%E3%85%87&start = 1&display = 100
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-5-fc443f398ec2> in <module>
+     83 
+     84 if __name__ == '__main__':
+---> 85   main()
+     86 
+
+2 frames
+/usr/lib/python3.9/json/__init__.py in loads(s, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)
+    337     else:
+    338         if not isinstance(s, (bytes, bytearray)):
+--> 339             raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+    340                             f'not {s.__class__.__name__}')
+    341         s = s.decode(detect_encoding(s), 'surrogatepass')
+
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+해석
+이 오류는 URL에서 공백이 포함되어 있어서 발생합니다. 검색어를 정확히 입력해주세요. 이 오류는 JSON 형식이 아닌 NoneType이 반환되어서 발생합니다. 이는 요청한 데이터가 없거나, 서버에서 처리할 수 없는 요청일 가능성이 있습니다.
+
+
+
+
+HT S
+검색을 입력하세요 : 올림픽
+HTTP Error 401: Unauthorized
+[2023-03-22 03:45:04.771065] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1&display=100
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-7-72a9b2006b8b> in <module>
+     83 
+     84 if __name__ == '__main__':
+---> 85   main()
+     86 
+
+2 frames
+/usr/lib/python3.9/json/__init__.py in loads(s, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)
+    337     else:
+    338         if not isinstance(s, (bytes, bytearray)):
+--> 339             raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+    340                             f'not {s.__class__.__name__}')
+    341         s = s.decode(detect_encoding(s), 'surrogatepass')
+
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+해석
+이 오류는 인증되지 않은 접근으로 인해 발생합니다. 요청에 필요한 인증 키가 없거나 올바르지 않은 경우이므로, 인증 키를 확인해주세요. 이 오류는 JSON 형식이 아닌 NoneType이 반환되어서 발생합니다. 이는 요청한 데이터가 없거나, 서버에서 처리할 수 없는 요청일 가능성이 있습니다.
+
+
+
+
+HT S
+검색을 입력하세요 : 올림픽
+[2023-03-22 03:45:53.569403] Url Request Success
+unknown encoding: urf-8
+[2023-03-22 03:45:53.714887] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1&display=100
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-8-ca4c11411c0a> in <module>
+     83 
+     84 if __name__ == '__main__':
+---> 85   main()
+     86 
+
+2 frames
+/usr/lib/python3.9/json/__init__.py in loads(s, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)
+    337     else:
+    338         if not isinstance(s, (bytes, bytearray)):
+--> 339             raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+    340                             f'not {s.__class__.__name__}')
+    341         s = s.decode(detect_encoding(s), 'surrogatepass')
+
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+해석
+이 오류는 인코딩 방식이 잘못 지정되어서 발생합니다. "unknown encoding: urf-8" 메시지는 "utf-8"을 의도한 것으로 추측됩니다. 요청하는 서버가 지원하는 인코딩 방식을 확인하고, 해당 방식으로 요청을 다시 시도해보세요. 이 오류는 JSON 형식이 아닌 NoneType이 반환되어서 발생합니다. 이는 요청한 데이터가 없거나, 서버에서 처리할 수 없는 요청일 가능성이 있습니다.
+
+
+
+
+HT S
+검색을 입력하세요 : 올림픽
+[2023-03-22 03:47:49.629543] Url Request Success
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+<ipython-input-10-3c6bbc2f85eb> in <module>
+     83 
+     84 if __name__ == '__main__':
+---> 85   main()
+     86 
+
+1 frames
+<ipython-input-10-3c6bbc2f85eb> in getPostData(post, jsonResult, cnt)
+     46   link = post['link']
+     47 
+---> 48   pDate = datetime.datetime.strptime(post['pubData'], '%a, %d %b %Y %H:%M:%S +0900')
+     49   pDate = pDate.strftime('%Y-%m-%d %H:%M:%S')
+     50 
+
+KeyError: 'pubData'
+
+해석
+해당 코드에서 발생한 오류는 KeyError입니다. pubData 키가 post 딕셔너리에 존재하지 않아서 해당 키를 찾을 수 없다는 오류입니다. 따라서 post 딕셔너리에서 pubData 키를 확인해야 합니다.
+
+
+
+
+HT S
+검색을 입력하세요 : 올림픽
+[2023-03-22 03:50:14.107253] Url Request Success
+[2023-03-22 03:50:15.085509] Url Request Success
+[2023-03-22 03:50:16.055748] Url Request Success
+[2023-03-22 03:50:17.026676] Url Request Success
+[2023-03-22 03:50:18.026739] Url Request Success
+[2023-03-22 03:50:19.038261] Url Request Success
+[2023-03-22 03:50:20.034266] Url Request Success
+[2023-03-22 03:50:21.065110] Url Request Success
+[2023-03-22 03:50:22.122831] Url Request Success
+[2023-03-22 03:50:23.178670] Url Request Success
+HTTP Error 400: Bad Request
+[2023-03-22 03:50:23.924082] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1001&display=100
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-11-2c08ea564905> in <module>
+     83 
+     84 if __name__ == '__main__':
+---> 85   main()
+     86 
+
+2 frames
+/usr/lib/python3.9/json/__init__.py in loads(s, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)
+    337     else:
+    338         if not isinstance(s, (bytes, bytearray)):
+--> 339             raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+    340                             f'not {s.__class__.__name__}')
+    341         s = s.decode(detect_encoding(s), 'surrogatepass')
+
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+해석
+검색어 '올림픽'에 대한 뉴스 검색 요청 중에 HTTP 에러 400 (Bad Request)가 발생한 것으로 보입니다. 이는 검색 요청이 잘못되어 발생하는 오류입니다. 이어서 JSON object를 str, bytes 또는 bytearray 형태로 변환할 수 없는 TypeError가 발생한 것 같습니다. 이는 이전에 발생한 오류와는 별개의 문제로 보입니다.
+
+
+
+
+HT S
+검색을 입력하세요 : 올림픽
+not enough arguments for format string
+[2023-03-22 03:57:55.192944] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1&display=100
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-14-b92ae6ffd2ed> in <module>
+     85 
+     86 if __name__ == '__main__':
+---> 87   main()
+     88 
+
+2 frames
+/usr/lib/python3.9/json/__init__.py in loads(s, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)
+    337     else:
+    338         if not isinstance(s, (bytes, bytearray)):
+--> 339             raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+    340                             f'not {s.__class__.__name__}')
+    341         s = s.decode(detect_encoding(s), 'surrogatepass')
+
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+
+해석
+에러 메시지 "not enough arguments for format string"은 문자열 포맷팅에서 필요한 인자의 개수가 충분하지 않아서 발생하는 에러입니다. 이는 코드의 문자열 포맷팅 부분을 확인해봐야 합니다.
+
+에러 메시지 "the JSON object must be str, bytes or bytearray, not NoneType"은 JSON 객체가 NoneType으로 반환되어서 발생하는 에러입니다. 이는 코드에서 API 요청에 실패하여서 발생하는 에러로, URL을 확인하고 요청에 필요한 인자가 모두 제공되었는지 다시 확인해볼 필요가 있습니다.
+
+
+
+
+HT S
+HTTP Error 400: Bad Request
+[2023-03-22 03:59:48.377166] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1001&display=100
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-16-506a08a4d563> in <module>
+     86 
+     87 if __name__ == '__main__':
+---> 88   main()
+     89 
+
+2 frames
+/usr/lib/python3.9/json/__init__.py in loads(s, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)
+    337     else:
+    338         if not isinstance(s, (bytes, bytearray)):
+--> 339             raise TypeError(f'the JSON object must be str, bytes or bytearray, '
+    340                             f'not {s.__class__.__name__}')
+    341         s = s.decode(detect_encoding(s), 'surrogatepass')
+
+TypeError: the JSON object must be str, bytes or bytearray, not NoneType
+해석
+HTTP Error 400: Bad Request는 서버에서 요청을 잘못 이해하거나 처리하지 못한 경우 발생하는 오류입니다. 이 경우, 서버에서 반환한 데이터가 NoneType으로 인식되어 JSON 객체가 아닌 것으로 보이므로, 이를 처리하는 과정에서 TypeError가 발생한 것으로 보입니다. 이 오류는 주로 요청 매개변수 또는 API 키 값 등을 잘못 지정한 경우나 서버가 과부하인 경우 발생합니다.
+
+
+
+
+HT S
+HTTP Error 400: Bad Request
+[2023-03-22 04:03:22.554421] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1001&display=100
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-18-4fbed375a496> in <module>
+     86 
+     87 if __name__ == '__main__':
+---> 88   main()
+     89 
+
+<ipython-input-18-4fbed375a496> in main()
+     72       getPostData(post, jsonResult, cnt)  #[CODE 3]
+     73 
+---> 74       start = jsonResponse['start'] + jsonResponse['display']
+     75       jsonResponse = getNaverSearch(node, srcText, start, 100)  #[CODE 2]
+     76 
+
+TypeError: 'NoneType' object is not subscriptable
+해석
+이 오류는 TypeError: 'NoneType' object is not subscriptable 입니다. 이는 jsonResponse 변수가 None 값을 가지고 있어서 해당 오류가 발생한 것입니다. jsonResponse 변수가 None 값을 반환하는 이유는 이전 요청에서 네이버 API 서버에서 반환한 데이터에 오류가 있거나, 요청에 사용된 인자에 문제가 있을 가능성이 있습니다.
+
+
+
+
+HT S
+HTTP Error 400: Bad Request
+[2023-03-22 04:09:01.680192] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1001&display=100
+전체 검색 : 3875979 건
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-19-1ca6b2a05132> in <module>
+     86 
+     87 if __name__ == '__main__':
+---> 88   main()
+     89 
+
+1 frames
+/usr/lib/python3.9/json/__init__.py in dumps(obj, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys, **kw)
+    232     if cls is None:
+    233         cls = JSONEncoder
+--> 234     return cls(
+    235         skipkeys=skipkeys, ensure_ascii=ensure_ascii,
+    236         check_circular=check_circular, allow_nan=allow_nan, indent=indent,
+
+TypeError: __init__() got an unexpected keyword argument 'sort_key'
+해석
+에러 메시지를 보면 __init__() got an unexpected keyword argument 'sort_key' 라고 나와 있습니다. 이는 JSONEncoder 클래스의 __init__() 메소드가 sort_key 라는 인자를 받지 않는데, 해당 인자를 전달하려고 해서 발생한 오류입니다. 이는 스크립트에서 json.dump() 또는 json.dumps() 함수를 호출할 때 sort_key 라는 인자를 잘못 전달해서 발생한 오류이므로, 스크립트 내에서 해당 부분을 수정하면 됩니다.
+
+
+
+
+HT S
+HTTP Error 400: Bad Request
+[2023-03-22 04:11:07.453262] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1001&display=100
+전체 검색 : 3875979 건
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-20-14e3653f848e> in <module>
+     86 
+     87 if __name__ == '__main__':
+---> 88   main()
+     89 
+
+<ipython-input-20-14e3653f848e> in main()
+     77   print('전체 검색 : %d 건' %total)
+     78 
+---> 79   with open('%s_naver_%s.json' % (srcText, node), 'w', enoding = 'utf8') as outfile:
+     80     jsonFile = json.dumps(jsonResult, indent=4, sort_keys = True, ensure_ascii = False)
+     81 
+
+TypeError: 'enoding' is an invalid keyword argument for open()
+
+해석
+위 오류는 enoding 대신 encoding으로 오타가 있어서 생긴 오류입니다. open() 함수에 지정하는 인자 중에 encoding 인자가 있는데, 이 인자를 올바르게 입력하지 않아서 생긴 오류입니다. 따라서, encoding 인자를 enoding으로 잘못 입력했다는 메시지가 출력됩니다.
+
+
+
+
+HT S
+HTTP Error 400: Bad Request
+[2023-03-22 04:13:46.577032] Error for URL : https://openapi.naver.com/v1/search/news.json?query=%EC%98%AC%EB%A6%BC%ED%94%BD&start=1001&display=100
+전체 검색 : 3875979 건
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-21-dd6356badc77> in <module>
+     86 
+     87 if __name__ == '__main__':
+---> 88   main()
+     89 
+
+<ipython-input-21-dd6356badc77> in main()
+     82     outfile.write(jsonFile)
+     83 
+---> 84   print("가져온 데이터 : &d 건" %(cnt))
+     85   print('%s_naver_%s.json SAVED' % (srcText, node))
+     86 
+
+TypeError: not all arguments converted during string formatting
+해석:
+파일에 쓰려는 코드에서 outfile.write(jsonFile)은 올바르게 작동하지만, 마지막 출력문에서 %d 포맷 문자열을 올바르게 사용하지 않아서 오류가 발생했습니다. %d는 정수형 값을 포맷하는데, 올바른 정수값이 제공되지 않았기 때문입니다.
+
+
+
+
+
+Regenerate response
