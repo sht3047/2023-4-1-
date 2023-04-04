@@ -1,3 +1,14 @@
+#========#========#========#========#
+write 
+	230329
+writer 
+	sht
+content
+	빅데이터 분석 강의 4주차
+	- BeautifulSoup를 이용하여 페리카나 매장 정보 저장
+#========#========#========#========#
+
+
 chap06 BeautifulSoup pelicana store list crawling
 
 6장의 기본 예제는 Hollys의 전국 매장의 위치, 주소, 전화번호 등을 크롤링하여 csv로 저장하였다.
